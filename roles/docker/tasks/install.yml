@@ -12,7 +12,7 @@
 - meta: end_play
   when: docker_valid.failed == false
 
-- name: update apt cache
+- name: update apt cache before removing old sources
   apt:
     update_cache: true
   when: inventory_hostname in groups['oscric_nodes']
@@ -136,10 +136,9 @@
   when: inventory_hostname in groups['oscric_nodes']
   become: true
 
-# hack for docker to run as user
-- name: run docker without sudo (HACK)
-  shell:
-    cmd: |
-      chown {{ ansible_user }} /var/run/docker.sock
+- name: run docker without sudo
+  file:
+    path: /var/run/docker.sock
+    owner: "{{ ansible_user }}"
   when: inventory_hostname in groups['oscric_nodes']
   become: true
