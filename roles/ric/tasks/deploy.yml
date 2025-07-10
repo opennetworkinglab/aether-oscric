@@ -31,6 +31,7 @@
   git:
     repo: https://github.com/srsran/oran-sc-ric
     dest: /opt/oran-sc-ric
+    version: aab0aee1f8eb06dc43430a6b649d54f1284f484d
     update: yes
   when: inventory_hostname in groups['oscric_nodes']
   become: true
